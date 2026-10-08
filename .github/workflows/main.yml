@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  build-and-lint:
+    name: Build & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Compile (syntax check)
+        run: python -m compileall -q aceest app.py tests
+
+      - name: Lint with flake8
+        run: flake8 .
+
+  docker-build-and-test:
+    name: Docker Build & Test
+    needs: build-and-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+
+      - name: Build test image
+        run: docker build --target test -t aceest-fitness:test .
+
+      - name: Run Pytest inside the container
+        run: docker run --rm aceest-fitness:test
+
+      - name: Build runtime image
+        run: docker build --target runtime -t aceest-fitness:${{ github.sha }} .
+
+      - name: Smoke test the running container
+        run: |
+          docker run -d --name aceest -p 5000:5000 aceest-fitness:${{ github.sha }}
+          for i in $(seq 1 15); do
+            curl -fs http://localhost:5000/health && break
+            sleep 2
+          done
+          curl -fs http://localhost:5000/api/programs
+
+      - name: Show logs and clean up
+        if: always()
+        run: |
+          docker logs aceest || true
+          docker rm -f aceest || true
