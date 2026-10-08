@@ -67,7 +67,7 @@ curl -X POST http://localhost:5000/api/clients \
 
 ## Local setup and execution
 
-Requires Python 3.12+ and Git.
+Requires Python 3.9+ (the Docker image uses 3.12) and Git.
 
 ```bash
 git clone https://github.com/dibyadyuti-bits/aceest-fitness-devops.git
