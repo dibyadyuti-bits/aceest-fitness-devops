@@ -140,7 +140,8 @@ image and smoke-tests the live container. A red job blocks the merge.
 **Jenkins** is the secondary BUILD and quality gate in a controlled
 environment. It pulls the latest code from GitHub (polling every ~5 minutes, or
 via webhook), rebuilds a clean virtual environment, lints, runs the tests and
-publishes JUnit results, then builds and tests the Docker images. The workspace
+publishes JUnit results, then builds and tests the Docker images (skipped with a
+message if the agent cannot reach the Docker daemon). The workspace
 is wiped after every run so each build starts clean.
 
 ### Setting up the Jenkins job
