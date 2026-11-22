@@ -1,0 +1,15 @@
+# ClusterIP Service in front of one track. Rendered by k8s/release.sh ({{NAME}}, {{TRACK}}).
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{NAME}}
+  labels:
+    app: aceest
+spec:
+  selector:
+    app: aceest
+    track: "{{TRACK}}"
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

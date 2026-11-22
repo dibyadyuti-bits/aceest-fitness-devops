@@ -1,0 +1,19 @@
+# Canary: main route to the stable track (see ingress-canary.yaml for the canary slice).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aceest
+  annotations:
+    kubernetes.io/description: "Canary: stable track"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /canary
+            pathType: Prefix
+            backend:
+              service:
+                name: aceest-stable
+                port:
+                  number: 80

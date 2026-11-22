@@ -1,0 +1,19 @@
+# Blue-green: aceest-live points at the live colour; release.sh switches its selector.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aceest
+  annotations:
+    kubernetes.io/description: "Blue-green: live colour selected by the aceest-live Service"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /blue-green
+            pathType: Prefix
+            backend:
+              service:
+                name: aceest-live
+                port:
+                  number: 80

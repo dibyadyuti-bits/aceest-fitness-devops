@@ -1,0 +1,21 @@
+# Shadow: users are answered only by the primary track; NGINX copies every request
+# (fire-and-forget) to the shadow track so the new version sees real traffic.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aceest
+  annotations:
+    nginx.ingress.kubernetes.io/mirror-target: "http://aceest-shadow.aceest-shadow.svc.cluster.local$request_uri"
+    nginx.ingress.kubernetes.io/mirror-request-body: "on"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /shadow
+            pathType: Prefix
+            backend:
+              service:
+                name: aceest-primary
+                port:
+                  number: 80
