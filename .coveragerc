@@ -1,0 +1,16 @@
+[run]
+# Paths relative to the repository root in coverage.xml, so SonarCloud can match them to
+# the sources whichever directory (Jenkins workspace, container, runner) ran the tests.
+relative_files = True
+source = .
+omit =
+    tests/*
+    legacy/*
+    .venv/*
+    venv/*
+
+[report]
+show_missing = True
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:

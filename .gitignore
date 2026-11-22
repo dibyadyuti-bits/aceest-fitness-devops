@@ -8,3 +8,6 @@ htmlcov/
 coverage.xml
 *.db
 *_report.pdf
+reports/
+dist/
+.scannerwork/

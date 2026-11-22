@@ -18,16 +18,23 @@ FROM base AS test
 COPY requirements-dev.txt .
 RUN pip install -r requirements-dev.txt
 COPY . .
-CMD ["pytest", "--cov=aceest", "--cov-report=term-missing"]
+CMD ["pytest", "--cov", "--cov-report=term-missing"]
 
 FROM base AS runtime
 RUN useradd --create-home --uid 1000 aceest \
     && mkdir /data && chown aceest:aceest /data
 COPY aceest/ aceest/
-COPY app.py .
-ENV ACEEST_DB=/data/aceest_fitness.db
+COPY app.py ACEest_Fitness.py VERSION ./
+# Version baked into the image: docker build --build-arg APP_VERSION=2.0.0 .
+# Empty means "read the VERSION file".
+ARG APP_VERSION=""
+ENV ACEEST_DB=/data/aceest_fitness.db \
+    APP_VERSION=${APP_VERSION}
+LABEL org.opencontainers.image.title="aceest-fitness" \
+      org.opencontainers.image.version="${APP_VERSION}" \
+      org.opencontainers.image.source="https://github.com/dibyadyuti-bits/aceest-fitness-devops"
 USER aceest
 EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health')" || exit 1
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--access-logfile", "-", "ACEest_Fitness:app"]
