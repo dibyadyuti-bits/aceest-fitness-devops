@@ -1,9 +1,11 @@
 """HTTP endpoints for ACEest Fitness & Gym."""
 
+import socket
 import sqlite3
 from datetime import date
 
-from flask import Blueprint, abort, jsonify, render_template_string, request
+from flask import (Blueprint, abort, current_app, jsonify,
+                   render_template_string, request)
 
 from . import fitness
 from .db import get_db
@@ -23,7 +25,8 @@ HOME_PAGE = """<!doctype html>
  code{color:#d4af37}
 </style></head><body>
 <h1>ACEest Functional Fitness</h1>
-<p>Gym management service. JSON API lives under <code>/api</code>.</p>
+<p>Gym management service. JSON API lives under <code>/api</code>.
+Version <code>{{ version }}</code> ({{ variant }}).</p>
 {% for code, p in programs.items() %}
 <div class="card"><h2>{{ p.name }} ({{ code }})</h2>
 <p>Calorie factor: {{ p.calorie_factor }} kcal per kg &middot;
@@ -71,13 +74,28 @@ def _optional_positive(data, field):
 
 @bp.get("/")
 def home():
-    return render_template_string(HOME_PAGE, programs=fitness.PROGRAMS)
+    return render_template_string(
+        HOME_PAGE,
+        programs=fitness.PROGRAMS,
+        version=current_app.config["APP_VERSION"],
+        variant=current_app.config["APP_VARIANT"],
+    )
 
 
 @bp.get("/health")
 def health():
     get_db().execute("SELECT 1")
     return jsonify(status="ok")
+
+
+@bp.get("/version")
+def version():
+    """Which release and deployment variant answered: used by the K8s smoke tests."""
+    return jsonify(
+        version=current_app.config["APP_VERSION"],
+        variant=current_app.config["APP_VARIANT"],
+        pod=socket.gethostname(),
+    )
 
 
 # ---------- programs & calculators ----------
