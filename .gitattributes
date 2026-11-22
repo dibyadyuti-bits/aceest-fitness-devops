@@ -1,0 +1,6 @@
+# Shell scripts and manifests must keep LF endings so they run on Linux agents
+# and in Git Bash even when checked out on Windows.
+*.sh   text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+Jenkinsfile text eol=lf
