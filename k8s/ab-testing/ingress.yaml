@@ -1,0 +1,19 @@
+# A/B testing: variant A is the default for everyone (see ingress-b.yaml).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aceest
+  annotations:
+    kubernetes.io/description: "A/B testing: variant A"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /ab-testing
+            pathType: Prefix
+            backend:
+              service:
+                name: aceest-a
+                port:
+                  number: 80

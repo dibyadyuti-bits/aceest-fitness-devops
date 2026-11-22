@@ -1,0 +1,22 @@
+# Variant B: only users in segment B, chosen by header 'X-Variant: B' or cookie 'variant=always'.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aceest-b
+  annotations:
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-by-header: "X-Variant"
+    nginx.ingress.kubernetes.io/canary-by-header-value: "B"
+    nginx.ingress.kubernetes.io/canary-by-cookie: "variant"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /ab-testing
+            pathType: Prefix
+            backend:
+              service:
+                name: aceest-b
+                port:
+                  number: 80
