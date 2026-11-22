@@ -20,7 +20,7 @@ Tools already installed here: Python 3.13, Git 2.46, Docker 29.6.
 |---|---|---|---|
 | 1 | Application Development & Modularization: Flask app built from the baseline scripts | `app.py`, `aceest/` (factory, logic, DB, routes); baselines in `legacy/` | ✅ Done, runs locally |
 | 2 | VCS Strategy: local Git repo synced to GitHub, descriptive commits, branches for features / fixes / infra | `setup_git_history.sh` → `feature/*`, `test/*`, `infra/*`, `docs/*` branches, `--no-ff` merges | ⬜ Step 3 |
-| 3 | Unit Testing & Validation: Pytest suite validating the app's internal logic | `tests/test_fitness.py`, `tests/test_api.py`: 69 tests, 99% coverage | ✅ Done, passing |
+| 3 | Unit Testing & Validation: Pytest suite validating the app's internal logic | `tests/test_fitness.py`, `tests/test_api.py`: 78 tests, 99% coverage | ✅ Done, passing |
 | 4 | Containerization with Docker: app, environment and dependencies in a portable image | Multi-stage `Dockerfile`, `.dockerignore` | ✅ Written. Verify in Step 4 |
 | 5 | Jenkins BUILD & Quality Gate: job pulls the latest code from GitHub and does a clean build | `Jenkinsfile` (checkout → fresh venv → lint → tests → Docker build) | ⬜ Step 6 |
 | 6 | GitHub Actions on every `push` / `pull_request`: **Build & Lint**, **Docker Image Assembly**, **Automated Testing inside the container** | `.github/workflows/main.yml` | ✅ Written. Runs after push (Step 5) |
@@ -42,7 +42,7 @@ Tools already installed here: Python 3.13, Git 2.46, Docker 29.6.
 |---|---|
 | **Application Integrity** | 13 working endpoints, JSON errors (400/404/409), SQLite persistence |
 | **VCS Maturity** | Conventional-Commit messages (`feat:`, `test:`, `ci:`, `build:`, `docs:`), one branch per concern, `--no-ff` merges |
-| **Testing Coverage** | 69 tests covering business logic and every endpoint, including error paths. 99% line coverage |
+| **Testing Coverage** | 78 tests covering business logic and every endpoint, including error paths. 99% line coverage |
 | **Docker Efficiency** | `python:3.12-slim`, multi-stage (test tools excluded from runtime), cached dependency layer, `.dockerignore`, non-root user, Gunicorn, `HEALTHCHECK` |
 | **Pipeline Reliability** | Jenkins build green with JUnit results. GitHub Actions green on every push |
 | **Documentation Clarity** | README with structure, API table, setup, tests, Docker, CI/CD diagram, branching strategy |
@@ -99,12 +99,12 @@ Stop the server with `Ctrl+C` before Step 4. Docker needs port 5000 free.
 ## Step 2 — Run the tests and lint
 
 ```powershell
-pytest                                          # 69 passed
+pytest                                          # 78 passed
 pytest --cov=aceest --cov-report=term-missing   # coverage ~99%
 flake8 .                                        # no output = clean
 ```
 
-📸 **Screenshot:** the `69 passed` summary and the coverage table.
+📸 **Screenshot:** the `78 passed` summary and the coverage table.
 
 ---
 
@@ -215,7 +215,7 @@ Nothing to configure. The push in Step 3 triggers `.github/workflows/main.yml`.
 5. Click **Build Now**. The stages are **Checkout → Setup Environment → Lint → Unit Tests → Docker Build**.
 6. After the first build, the `pollSCM('H/5 * * * *')` trigger rebuilds automatically on new commits.
 
-📸 **Screenshots:** Stage View with all stages green, the **Test Result** page (69 tests),
+📸 **Screenshots:** Stage View with all stages green, the **Test Result** page (78 tests),
 and the console output's final `BUILD #n passed` line.
 
 **Troubleshooting**
@@ -236,7 +236,7 @@ and the console output's final `BUILD #n passed` line.
 - [ ] Repository is **public**: open it in a private/incognito window to confirm
 - [ ] `main` and all feature branches pushed. The brief `.docx` is **not** in the repo
 - [ ] Commit history shows meaningful Conventional-Commit messages and `--no-ff` merges
-- [ ] `pytest` passes locally (69 tests) and inside Docker
+- [ ] `pytest` passes locally (78 tests) and inside Docker
 - [ ] Docker image builds and the container reports *healthy*
 - [ ] GitHub Actions run is green (both jobs) on the latest push
 - [ ] Jenkins pipeline build is green, pulling from the GitHub repo, with JUnit test results published
