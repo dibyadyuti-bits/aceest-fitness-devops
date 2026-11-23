@@ -11,3 +11,6 @@ coverage.xml
 reports/
 dist/
 .scannerwork/
+
+# Local VM setup notes
+docs/VM_SETUP.md
