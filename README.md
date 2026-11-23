@@ -236,11 +236,13 @@ Images built only locally can be loaded with `minikube image load <image>`.
 
 ### Public endpoint
 
-Minikube is only reachable from this machine. To give reviewers a URL, expose the
-ingress with a tunnel while `minikube tunnel` is running, e.g. Cloudflare's quick tunnel:
+Minikube is only reachable from this machine. To give reviewers a URL, port-forward the
+ingress controller and publish it with a Cloudflare quick tunnel (no account needed). Keep
+both commands running; the URL changes on every run.
 
 ```bash
-cloudflared tunnel --url http://127.0.0.1:80
+kubectl -n ingress-nginx port-forward --address 0.0.0.0 svc/ingress-nginx-controller 8081:80
+cloudflared tunnel --url http://localhost:8081
 # https://<random>.trycloudflare.com/rolling/  /blue-green/  /canary/  /ab-testing/  /shadow/
 ```
 
