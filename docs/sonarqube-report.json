@@ -1,0 +1,112 @@
+{
+  "project": "dibyadyuti-bits_aceest-fitness-devops",
+  "quality_gate": {
+    "status": "OK",
+    "conditions": [
+      {
+        "status": "OK",
+        "metricKey": "new_reliability_rating",
+        "comparator": "GT",
+        "periodIndex": 1,
+        "errorThreshold": "1",
+        "actualValue": "1"
+      },
+      {
+        "status": "OK",
+        "metricKey": "new_security_rating",
+        "comparator": "GT",
+        "periodIndex": 1,
+        "errorThreshold": "1",
+        "actualValue": "1"
+      },
+      {
+        "status": "OK",
+        "metricKey": "new_maintainability_rating",
+        "comparator": "GT",
+        "periodIndex": 1,
+        "errorThreshold": "1",
+        "actualValue": "1"
+      },
+      {
+        "status": "OK",
+        "metricKey": "new_security_hotspots_reviewed",
+        "comparator": "LT",
+        "periodIndex": 1,
+        "errorThreshold": "100",
+        "actualValue": "100.0"
+      }
+    ],
+    "periods": [
+      {
+        "index": 1,
+        "mode": "previous_version",
+        "date": "2026-11-23T18:57:02+0000",
+        "parameter": "not provided"
+      }
+    ],
+    "ignoredConditions": false
+  },
+  "measures": {
+    "coverage": "99.6",
+    "reliability_rating": "1.0",
+    "bugs": "0",
+    "alert_status": "OK",
+    "duplicated_lines_density": "0.0",
+    "code_smells": "0",
+    "tests": "78",
+    "security_rating": "1.0",
+    "ncloc": "474",
+    "vulnerabilities": "0",
+    "security_hotspots": "0",
+    "sqale_rating": "1.0"
+  },
+  "latest_analyses": [
+    {
+      "key": "4ef31a81-af61-4cd3-947c-8c3c60b50e96",
+      "date": "2026-11-23T21:55:49+0000",
+      "events": [
+        {
+          "key": "AaIKabgluepK1cb5UN6T",
+          "category": "VERSION",
+          "name": "2.0.0"
+        }
+      ],
+      "projectVersion": "2.0.0",
+      "manualNewCodePeriodBaseline": false,
+      "revision": "ff4bcaed6a6f037e7e9b5946becd4a428063f7dc"
+    },
+    {
+      "key": "e7103b25-e81f-4121-86d5-98a7fcc75489",
+      "date": "2026-11-23T21:52:40+0000",
+      "events": [],
+      "projectVersion": "2.0.0",
+      "manualNewCodePeriodBaseline": false,
+      "revision": "ff4bcaed6a6f037e7e9b5946becd4a428063f7dc"
+    },
+    {
+      "key": "c6b64d39-29f5-46c8-96c4-7b08ea616243",
+      "date": "2026-11-23T21:25:46+0000",
+      "events": [],
+      "projectVersion": "2.0.0",
+      "manualNewCodePeriodBaseline": false,
+      "revision": "89b31a61067dec07f383091e7f4c7bf6d5d313c4"
+    },
+    {
+      "key": "7a923f42-c928-408c-8207-c1e3089a3e42",
+      "date": "2026-11-23T21:22:06+0000",
+      "events": [],
+      "projectVersion": "2.0.0",
+      "manualNewCodePeriodBaseline": false,
+      "revision": "89b31a61067dec07f383091e7f4c7bf6d5d313c4"
+    },
+    {
+      "key": "85e971ac-87b8-486b-97d4-154ecc4a3d54",
+      "date": "2026-11-23T20:30:58+0000",
+      "events": [],
+      "projectVersion": "2.0.0",
+      "manualNewCodePeriodBaseline": false,
+      "revision": "79598e9965dcfb3d7c728d212bdc8fbf1cc846cb"
+    }
+  ],
+  "open_issues": 0
+}
