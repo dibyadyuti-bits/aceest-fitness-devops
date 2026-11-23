@@ -73,7 +73,7 @@ jobs:
       # sonar-project.properties sets sonar.qualitygate.wait=true: a failed gate fails this job.
       - name: SonarCloud scan and quality gate
         if: steps.sonar.outputs.enabled == 'true'
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
