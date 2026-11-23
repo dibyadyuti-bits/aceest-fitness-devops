@@ -1,10 +1,10 @@
 # ACEest Fitness & Gym — CI/CD Pipeline Report
 
 **Course:** Introduction to DevOps (CSIZG514/SEZG514), Assignment 2
-**Student:** *(your name)* (2025TM93192)
+**Student:** Dibyadyuti Roy (2025TM93192)
 **Repository:** <https://github.com/dibyadyuti-bits/aceest-fitness-devops>
-**Docker Hub:** `https://hub.docker.com/r/<dockerhub-user>/aceest-fitness` *(fill in)*
-**Cluster endpoint:** `https://<tunnel-host>/` *(fill in; one path per strategy)*
+**Docker Hub:** `https://hub.docker.com/r/dibyadyutibits/aceest-fitness`
+**Cluster endpoint:** <https://cove-petersburg-red-addresses.trycloudflare.com/> (one path per strategy: `/rolling/`, `/blue-green/`, `/canary/`, `/ab-testing/`, `/shadow/`)
 
 ## 1. CI/CD architecture overview
 
@@ -77,16 +77,19 @@ marks the build failed. The `SIMULATE_BAD_RELEASE` parameter demonstrates this o
 
 - Every push and pull request is linted, tested (78 tests, 99% coverage) and built into a
   container that is tested again, on both GitHub Actions and Jenkins.
-- SonarCloud analysis with an enforced quality gate: *(fill in gate status, bugs,
-  vulnerabilities, code smells, coverage from the SonarCloud dashboard)*.
+- SonarCloud analysis with an enforced quality gate: gate **Passed** on
+  `main`, 0 bugs, 0 vulnerabilities, 0 code smells (reliability, security and
+  maintainability all rated A), 99.6% coverage and 0% duplication.
 - Every Jenkins build produces a versioned image on Docker Hub, a source tarball and a
   build-info file (version, commit, tag, image) archived with the JUnit and SonarCloud
   reports.
 - One parameterised Jenkins job deploys any of the five strategies to Kubernetes,
   verifies the release from inside the cluster and rolls back automatically on failure.
-  The bad-release demo showed the previous version restored *(fill in build number)*.
+  The bad-release demo showed the previous version restored in Jenkins build #4
+  (smoke test failed → `release.sh rollback` → previous ReplicaSet live again).
 - Releases are traceable end to end: git tag → `VERSION` → image tag → `/version` in the
   running pod.
 
-*(Add screenshots: Jenkins stage view, SonarCloud dashboard, Docker Hub tags,
-`kubectl get pods -A`, `release.sh traffic` output for canary, and the rollback build.)*
+Screenshots of every step (CI runs, SonarCloud, Docker Hub tags, Jenkins builds #1–#10
+including the #4 rollback, pods, traffic splits and the public endpoint) are in
+`Screenshots/assignment-2/`.
